@@ -101,19 +101,19 @@ class ListEmployees extends React.Component {
                         </tr>
                         <tr key="filter">
                             <th></th>
-                            <th><input defaultValue={filters&&!!filters.employeeName?filters.employeeName:"Filter..."} 
+                            <th><input size="15" defaultValue={filters&&!!filters.employeeName?filters.employeeName:"Filter..."} 
                                 onFocus={e => e.target.value === "Filter..." ? e.target.value = '' : null}
                                 onBlur={e => onChangeFilter(query, filters, "employeeName", e.target.value)}></input></th>
-                            <th><input defaultValue={filters&&!!filters.EmployeeNumber?filters.EmployeeNumber:"Filter..."}
+                            <th><input size="10" defaultValue={filters&&!!filters.EmployeeNumber?filters.EmployeeNumber:"Filter..."}
                                 onFocus={e => e.target.value === "Filter..." ? e.target.value = '' : null}
                                 onBlur={e => onChangeFilter(query, filters, "EmployeeNumber", e.target.value)}></input></th>
-                            <th><input defaultValue={filters&&!!filters.DateJoined?filters.DateJoined:"Filter..."}
+                            <th><input size="10" defaultValue={filters&&!!filters.DateJoined?filters.DateJoined:"Filter..."}
                                 onFocus={e => e.target.value === "Filter..." ? e.target.value = '' : null}
                                 onBlur={e => onChangeFilter(query, filters, "DateJoined", e.target.value)}></input></th>
-                            <th><input defaultValue={filters&&!!filters.Extension?filters.Extension:"Filter..."}
+                            <th><input size="5" defaultValue={filters&&!!filters.Extension?filters.Extension:"Filter..."}
                                 onFocus={e => e.target.value === "Filter..." ? e.target.value = '' : null}
                                 onBlur={e => onChangeFilter(query, filters, "Extension", e.target.value)}></input></th>
-                            <th><input defaultValue={filters&&!!filters.RoleName?filters.RoleName:"Filter..."}
+                            <th><input size="15" defaultValue={filters&&!!filters.RoleName?filters.RoleName:"Filter..."}
                                 onFocus={e => e.target.value === "Filter..." ? e.target.value = '' : null}
                                 onBlur={e => onChangeFilter(query, filters, "RoleName", e.target.value)}></input></th>
                             <th></th>

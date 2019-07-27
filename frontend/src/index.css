@@ -1,6 +1,5 @@
 table {
   border-collapse: collapse;
-  table-layout:fixed;
   margin: 0 auto;
   text-align: center;
 }
@@ -13,7 +12,7 @@ table td, table th {
 
 table thead th {
   background-color: #CCE8EB;
-  width: 150px;
+  width: 100px;
 }
 
 table tr:nth-child(odd) {
