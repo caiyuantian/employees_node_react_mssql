@@ -57,13 +57,19 @@ exports.getAll = async (req, res) => {
             //whereArr.push({EmployeeNumber: req.query.EmployeeNumber})
         }
         if(!!req.query.Extension) {
-            whereArr.push({Extension: req.query.Extension})
+            whereArr.push(Sequelize.where(Sequelize.cast(Sequelize.col('Extension'), 'varchar'), {
+                [Op.like]: '%'+req.query.Extension+'%'}))
+            //whereArr.push({Extension: req.query.Extension})
         }
         if(!!req.query.DateJoined) {
-            whereArr.push({DateJoined: req.query.DateJoined})
+            whereArr.push(Sequelize.where(Sequelize.cast(Sequelize.col('DateJoined'), 'varchar'), {
+                [Op.like]: '%'+req.query.DateJoined+'%'}))
+            //whereArr.push({DateJoined: req.query.DateJoined})
         }
         if(!!req.query.RoleName) {
-            whereArr.push({RoleName: req.query.RoleName})
+            whereArr.push(Sequelize.where(Sequelize.col('Role.RoleName'), {
+                [Op.like]: '%'+req.query.RoleName+'%'}))
+            //whereArr.push({RoleName: req.query.RoleName})
         }
     }
 
@@ -76,6 +82,7 @@ exports.getAll = async (req, res) => {
 
     try {
         let count = await Employee.count({
+            include: [{ model: Role, attributes: ['RoleID', 'RoleName'], as: 'Role' }],
             where: whereObj
         })
         if (count < offset) {
