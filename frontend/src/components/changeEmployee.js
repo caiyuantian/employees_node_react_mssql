@@ -6,11 +6,37 @@ import actionTypes from '../actionTypes'
 import { onUpdateEmployee } from '../actions'
 
 class ChangeEmployee extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onValidateFields = this.onValidateFields.bind(this);
+    }
+
     componentDidMount() {
         let pathname = this.props.location.pathname
         let EmployeeID = pathname.substring(pathname.lastIndexOf('/') + 1);
         store.dispatch({ type: actionTypes.FETCH_EMPLOYEE_TOBE_UPDATE_ASYNC, EmployeeID: EmployeeID });
     }
+
+    onValidateFields(EmployeeNumber, FirstName, LastName, Extension) {
+        if(!EmployeeNumber) {
+            alert("please input Employee Number")
+            return false;
+        }
+        if(!FirstName) {
+            alert("please input First Name")
+            return false;
+        }
+        if(!LastName) {
+            alert("please input Last Name")
+            return false;
+        }
+        if(Extension > 32767) {
+            alert("Extension number should be < 32768")
+            return false;
+        }
+        return true;
+    }
+
     render() {
         let { employeeTobeChange, roles, onUpdateEmployee } = this.props;
 
@@ -38,23 +64,23 @@ class ChangeEmployee extends React.Component {
                     <tbody>
                         <tr>
                             <td>Employee ID: </td>
-                            <td><input type="text" id="EmployeeID" value={employeeTobeChange.EmployeeID}></input></td>
+                            <td><input type="text" id="EmployeeID" defaultValue={employeeTobeChange.EmployeeID}></input></td>
                         </tr>
                         <tr>
                             <td>Employee Number:</td>
-                            <td><input id="EmployeeNumber" defaultValue={employeeTobeChange.EmployeeNumber}></input></td>
+                            <td><input type="number" style={{ width: 60 }} id="EmployeeNumber" defaultValue={employeeTobeChange.EmployeeNumber}></input></td>
                         </tr>
                         <tr>
                             <td>First Name:</td>
-                            <td><input id="FirstName" defaultValue={employeeTobeChange.FirstName}></input> </td>
+                            <td><input type="text" style={{ width: 100 }} id="FirstName" defaultValue={employeeTobeChange.FirstName}></input> </td>
                         </tr>
                         <tr>
                             <td>Last Name:</td>
-                            <td><input id="LastName" defaultValue={employeeTobeChange.LastName}></input> </td>
+                            <td><input type="text" style={{ width: 100 }} id="LastName" defaultValue={employeeTobeChange.LastName}></input> </td>
                         </tr>
                         <tr>
                             <td>Extension:</td>
-                            <td><input id="Extension" min="0" max="655635" defaultValue={employeeTobeChange.Extension}></input></td>
+                            <td><input type="number" min="0" max="32768" style={{ width: 60 }} id="Extension" defaultValue={employeeTobeChange.Extension}></input></td>
                         </tr>
                         <tr>
                             <td>RoleName:</td>
@@ -69,8 +95,14 @@ class ChangeEmployee extends React.Component {
                             <td colSpan="2">
                                 <button onClick={() => {
                                     //alert(["Employee record updated!", "test"]);
-                                    var answer = window.confirm("Save changes?")
-                                    if (answer) {
+                                    let answer = window.confirm("Save changes?")
+                                    let isCheck = this.onValidateFields(
+                                        document.getElementById("EmployeeNumber").value,
+                                        document.getElementById("FirstName").value,
+                                        document.getElementById("LastName").value,
+                                        document.getElementById("Extension").value,
+                                    );
+                                    if (answer && isCheck) {
                                         return onUpdateEmployee(
                                             document.getElementById("EmployeeID").value,
                                             document.getElementById("EmployeeNumber").value,

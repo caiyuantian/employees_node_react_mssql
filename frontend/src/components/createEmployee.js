@@ -8,7 +8,29 @@ import { onCreateEmployee } from '../actions'
 class CreateEmployee extends React.Component {
     componentDidMount() {
         store.dispatch({ type: actionTypes.CREATE_EMPLOYEE_FETCH_ROLES_ASYNC});
+        this.onValidateFields = this.onValidateFields.bind(this);
     }
+
+    onValidateFields(EmployeeNumber, FirstName, LastName, Extension) {
+        if(!EmployeeNumber) {
+            alert("please input Employee Number")
+            return false;
+        }
+        if(!FirstName) {
+            alert("please input First Name")
+            return false;
+        }
+        if(!LastName) {
+            alert("please input Last Name")
+            return false;
+        }
+        if(Extension > 32767) {
+            alert("Extension number should be < 32768")
+            return false;
+        }
+        return true;
+    }
+
     render() {
         let { roles, onCreateEmployee } = this.props;
 
@@ -24,19 +46,19 @@ class CreateEmployee extends React.Component {
                     <tbody>
                         <tr>
                             <td>Employee Number:</td>
-                            <td><input id="EmployeeNumber"></input></td>
+                            <td><input type="number" style={{width:60}} id="EmployeeNumber"></input></td>
                         </tr>
                         <tr>
                             <td>First Name:</td>
-                            <td><input id="FirstName"></input> </td>
+                            <td><input type="text"  style={{width:100}} id="FirstName"></input> </td>
                         </tr>
                         <tr>
                             <td>Last Name:</td>
-                            <td><input id="LastName"></input> </td>
+                            <td><input type="text"  style={{width:100}} id="LastName"></input> </td>
                         </tr>
                         <tr>
                             <td>Extension:</td>
-                            <td><input id="Extension"></input></td>
+                            <td><input type="number" min="0" max="32768" style={{width:60}} id="Extension"></input></td>
                         </tr>
                         <tr>
                             <td>RoleName:</td>
@@ -51,8 +73,14 @@ class CreateEmployee extends React.Component {
                             <td colSpan="2">
                                 <button onClick={() => {
                                     //alert(["Employee record updated!", "test"]);
-                                    var answer = window.confirm("Save changes?")
-                                    if (answer) {
+                                    var answer = window.confirm("Confirm?")
+                                    let isCheck = this.onValidateFields(
+                                        document.getElementById("EmployeeNumber").value,
+                                        document.getElementById("FirstName").value,
+                                        document.getElementById("LastName").value,
+                                        document.getElementById("Extension").value,
+                                    );
+                                    if (answer && isCheck) {
                                         return onCreateEmployee(
                                             document.getElementById("EmployeeNumber").value,
                                             document.getElementById("FirstName").value,
