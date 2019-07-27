@@ -5,11 +5,11 @@ import config from '../config'
 
 export function* createEmployeeAsync(action) {
     let data = {
-        EmployeeNumber: action.EmployeeNumber,
+        EmployeeNumber: action.EmployeeNumber!==''?action.EmployeeNumber:null,
         FirstName: action.FirstName,
         LastName: action.LastName,
-        Extension: action.Extension,
-        RoleID: action.RoleID
+        Extension: action.Extension!==''?action.Extension:null,
+        RoleID: action.RoleID!==''?action.RoleID:null
     }
     console.log(JSON.stringify(data));
     try {
